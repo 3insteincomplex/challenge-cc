@@ -1,0 +1,27 @@
+{
+  "name": "data-challenge-codeconformity",
+  "version": "1.0.0",
+  "description": "Node and AWS data challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "console.log(\"Hello world!\");"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3insteincomplex/data-challenge.git"
+  },
+  "keywords": [
+    "aws",
+    "node"
+  ],
+  "author": "micahdaproz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3insteincomplex/data-challenge/issues"
+  },
+  "homepage": "https://github.com/3insteincomplex/data-challenge#readme",
+  "dependencies": {
+    "aws-sdk": "^2.395.0",
+    "uuid": "^3.3.2"
+  }
+}
