@@ -1,5 +1,6 @@
 const AWS = require("aws-sdk"); // Load the AWS SDK
-const OWNER_ID = ["794381291637"];
+const OWNER_ID = process.env.OWNER_ID;
+const 
 const ec2 = new AWS.EC2();
 let securityGroupList;
 
