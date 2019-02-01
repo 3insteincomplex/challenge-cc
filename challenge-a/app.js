@@ -1,8 +1,8 @@
 const AWS = require("aws-sdk"); // Load the AWS SDK
-const OWNER_ID = [process.env.OWNER_ID];
-const ec2 = new AWS.EC2();
+const OWNER_ID = [process.env.OWNER_ID]; // Load Env Var for OwnerID
+const ec2 = new AWS.EC2(); // Instatiate EC2
 
-exports.handler = async (event) => {
+exports.handler = async (event) => { // Async handler for AWS SDK
   const params = {
     Filters: [{
       Name: 'owner-id',
@@ -10,30 +10,30 @@ exports.handler = async (event) => {
     }]
   };
 
-  const response = {
+  const response = { // Establish Response form
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true
     }
   };
 
-  try {
+  try { // try-catch block to catch errors.
     var parseJSONList = [];
-    response.statusCode = 200;
+    response.statusCode = 200; // Establish Response Success status code.
     const data= await ec2.describeSecurityGroups(params).promise();
     data["SecurityGroups"].forEach(group => {
       parseJSONList.push({"GroupName":group["GroupName"], "GroupID":group["GroupId"]});
-    })
+    }) // Format security group data.
     response.body = JSON.stringify(parseJSONList);
     console.log("Completed compiling list of AWS Security Groups.")
   }
 
-  catch(err) {
-    response.statusCode = 500;
+  catch(err) { // Catch errors
+    response.statusCode = 500; // Establish Response Error status code.
     console.log("Error found :", err);
     response.body = JSON.stringify({
       message: `Could not load Security Group data: ${err}`
     });
   }
-  return response;
+  return response; // Handler outputs response.
 };
