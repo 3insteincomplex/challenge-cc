@@ -4,11 +4,11 @@ provider:
   name: aws
   runtime: nodejs8.10
   stage: dev
-  region: ap-southeast-2
+  region: ${file(./config.yml):region}
   endpointType: REGIONAL
-  role: arn:aws:iam::794381291637:role/service-role/dataChallengeAdmin
+  role: ${file(./config.yml):role}
   iamManagedPolicies: # Optional IAM Managed Policies, which allows to include the policies into IAM Role
-    - arn:aws:iam::794381291637:policy/service-role/AWSLambdaBasicExecutionRole-b22f742a-85f9-4042-b0fe-8782efa5671c
+    - ${file(./config.yml):policy}
 
 functions:
   app:
