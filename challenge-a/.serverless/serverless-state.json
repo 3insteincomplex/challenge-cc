@@ -37,7 +37,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/list-sec-groups/dev/1549204752034-2019-02-03T14:39:12.034Z/list-sec-groups.zip"
+                "S3Key": "serverless/list-sec-groups/dev/1549283778945-2019-02-04T12:36:18.945Z/list-sec-groups.zip"
               },
               "FunctionName": "list-sec-groups-dev-app",
               "Handler": "app.handler",
@@ -50,14 +50,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersioncU1IdL9DpcjPCijPX6gaDk5eu85F5vDinYk4voT1g": {
+          "AppLambdaVersionU7BXYTORfiSHHNA2GZc6QyCBEWAgMPa1nD2T0SGqQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "r3MuH5nzcqEuSXmAC2dA3fpGpo1CZhYlSPQjbMLcxfs="
+              "CodeSha256": "6gJqizfbTOLNtiwAnI0OFm6J6VLhdqTv2p4BuM6iT5g="
             }
           },
           "ApiGatewayRestApi": {
@@ -234,7 +234,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1549204752100": {
+          "ApiGatewayDeployment1549283779014": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -305,7 +305,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersioncU1IdL9DpcjPCijPX6gaDk5eu85F5vDinYk4voT1g"
+              "Ref": "AppLambdaVersionU7BXYTORfiSHHNA2GZc6QyCBEWAgMPa1nD2T0SGqQ"
             }
           },
           "ServiceEndpoint": {
@@ -399,7 +399,7 @@
     "artifact": "/Users/3insteincomplex/Desktop/data-challenge-cc/challenge-a/.serverless/list-sec-groups.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/list-sec-groups/dev/1549204752034-2019-02-03T14:39:12.034Z",
+    "artifactDirectoryName": "serverless/list-sec-groups/dev/1549283778945-2019-02-04T12:36:18.945Z",
     "artifact": "list-sec-groups.zip"
   }
 }

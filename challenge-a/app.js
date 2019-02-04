@@ -18,12 +18,28 @@ exports.handler = async (event) => { // Async handler for AWS SDK
   };
 
   try { // try-catch block to catch errors.
-    var parseJSONList = [];
+    var parseJSONList = {"data":[], "included":[]};
     response.statusCode = 200; // Establish Response Success status code.
     const data= await ec2.describeSecurityGroups(params).promise();
     data["SecurityGroups"].forEach(group => {
-      parseJSONList.push(group);
-    }) // Format security group data.
+      parseJSONList.data.push({
+          "type": "security group",
+          "id": group.GroupId,
+          "attributes": {
+            "name": group.GroupName,
+            "description": group.Description
+          }
+        });
+      parseJSONList.included.push({
+          "type": "permissions",
+          "id": group.GroupId,
+          "attributes": {
+            "tags": group.Tags,
+            "vpcid": group.VpcId
+          }
+        });
+      });
+    // Format security group data.
     response.body = JSON.stringify(parseJSONList, null,2);
     console.log("Completed compiling list of AWS Security Groups.")
   }
