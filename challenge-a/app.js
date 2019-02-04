@@ -22,9 +22,9 @@ exports.handler = async (event) => { // Async handler for AWS SDK
     response.statusCode = 200; // Establish Response Success status code.
     const data= await ec2.describeSecurityGroups(params).promise();
     data["SecurityGroups"].forEach(group => {
-      parseJSONList.push({"GroupName":group["GroupName"], "GroupID":group["GroupId"]});
+      parseJSONList.push(group);
     }) // Format security group data.
-    response.body = JSON.stringify(parseJSONList);
+    response.body = JSON.stringify(parseJSONList, null,2);
     console.log("Completed compiling list of AWS Security Groups.")
   }
 

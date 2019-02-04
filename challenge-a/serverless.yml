@@ -17,7 +17,7 @@ functions:
       - http: # this is an API Gateway HTTP event trigger
           path: app
           method: get
-          cors: false
+          cors: true
       - http: # all routes get proxied to the Express router
           path: app-any
           method: ANY

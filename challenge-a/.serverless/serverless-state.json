@@ -37,7 +37,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/list-sec-groups/dev/1548982871831-2019-02-01T01:01:11.831Z/list-sec-groups.zip"
+                "S3Key": "serverless/list-sec-groups/dev/1549204752034-2019-02-03T14:39:12.034Z/list-sec-groups.zip"
               },
               "FunctionName": "list-sec-groups-dev-app",
               "Handler": "app.handler",
@@ -50,14 +50,14 @@
               "AppLogGroup"
             ]
           },
-          "AppLambdaVersionZJe2x6IwctTsdiSFloD5ZGqGwGLxkpnHm158odf3dY": {
+          "AppLambdaVersioncU1IdL9DpcjPCijPX6gaDk5eu85F5vDinYk4voT1g": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AppLambdaFunction"
               },
-              "CodeSha256": "zARDGiZQ5S3NQfkrsUMDr2CXC5QY1Th9q5sTgKiEiSw="
+              "CodeSha256": "r3MuH5nzcqEuSXmAC2dA3fpGpo1CZhYlSPQjbMLcxfs="
             }
           },
           "ApiGatewayRestApi": {
@@ -86,7 +86,7 @@
               }
             }
           },
-          "ApiGatewayResourceProxyVar": {
+          "ApiGatewayResourceAppDashany": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
               "ParentId": {
@@ -95,7 +95,54 @@
                   "RootResourceId"
                 ]
               },
-              "PathPart": "{proxy+}",
+              "PathPart": "app-any",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodAppOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true,
+                    "method.response.header.Access-Control-Allow-Credentials": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'",
+                      "method.response.header.Access-Control-Allow-Credentials": "'false'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceApp"
+              },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -144,13 +191,13 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayMethodProxyVarAny": {
+          "ApiGatewayMethodAppDashanyAny": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "ANY",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceProxyVar"
+                "Ref": "ApiGatewayResourceAppDashany"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -187,7 +234,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1548982871848": {
+          "ApiGatewayDeployment1549204752100": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -196,8 +243,9 @@
               "StageName": "dev"
             },
             "DependsOn": [
+              "ApiGatewayMethodAppOptions",
               "ApiGatewayMethodAppGet",
-              "ApiGatewayMethodProxyVarAny"
+              "ApiGatewayMethodAppDashanyAny"
             ]
           },
           "AppLambdaPermissionApiGateway": {
@@ -257,7 +305,7 @@
           "AppLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AppLambdaVersionZJe2x6IwctTsdiSFloD5ZGqGwGLxkpnHm158odf3dY"
+              "Ref": "AppLambdaVersioncU1IdL9DpcjPCijPX6gaDk5eu85F5vDinYk4voT1g"
             }
           },
           "ServiceEndpoint": {
@@ -308,13 +356,31 @@
             "http": {
               "path": "app",
               "method": "get",
-              "cors": false,
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
               "integration": "AWS_PROXY"
             }
           },
           {
             "http": {
-              "path": "{proxy+}",
+              "path": "app-any",
               "method": "any",
               "cors": false,
               "integration": "AWS_PROXY"
@@ -333,7 +399,7 @@
     "artifact": "/Users/3insteincomplex/Desktop/data-challenge-cc/challenge-a/.serverless/list-sec-groups.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/list-sec-groups/dev/1548982871831-2019-02-01T01:01:11.831Z",
+    "artifactDirectoryName": "serverless/list-sec-groups/dev/1549204752034-2019-02-03T14:39:12.034Z",
     "artifact": "list-sec-groups.zip"
   }
 }
